@@ -1,7 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import Dashboard from '../components/Dashboard.jsx';
 import { makeAnalysis, makeRepository, makeScore } from './fixtures.js';
+
+vi.mock('recharts', () => import('./rechartsStub.jsx'));
 
 const richAnalysis = makeAnalysis({
   stars: { total: 100, mostStarred: makeRepository({ name: 'star-repo', stargazersCount: 50 }) },

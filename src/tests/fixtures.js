@@ -87,6 +87,11 @@ export function makeAnalysis(overrides = {}) {
     licenses: { frequency: { MIT: 8 }, unlicensed: 2 },
     age: { oldest: null, newest: null, averageAgeDays: 500 },
     activity: { lastActivityAt: '2025-12-01T00:00:00Z', repository: null },
+    timeline: [
+      { year: 2019, count: 3 },
+      { year: 2020, count: 4 },
+      { year: 2021, count: 3 },
+    ],
     sizes: { total: 1000, average: 100, largest: null, smallest: null },
     ...overrides,
   };

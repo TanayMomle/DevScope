@@ -6,6 +6,7 @@ import { GitHubError, GitHubErrorType } from '../api/errors.js';
 import { makeAnalysis, makeScore, makeUser } from './fixtures.js';
 
 vi.mock('../hooks/usePortfolioAnalysis.js', () => ({ usePortfolioAnalysis: vi.fn() }));
+vi.mock('recharts', () => import('./rechartsStub.jsx'));
 
 const state = (overrides = {}) => ({
   profile: { status: 'idle', data: null, error: null },

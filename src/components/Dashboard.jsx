@@ -3,6 +3,7 @@ import ScoreCard from './ScoreCard.jsx';
 import CategoryCard from './CategoryCard.jsx';
 import SummaryCard from './SummaryCard.jsx';
 import RepositoryHighlights from './RepositoryHighlights.jsx';
+import DashboardCharts from './charts/DashboardCharts.jsx';
 
 /**
  * The dashboard: a thin presentation of the analysis and score. It arranges
@@ -82,6 +83,8 @@ export default function Dashboard({ model }) {
       </div>
 
       <RepositoryHighlights analysis={analysis} />
+
+      <DashboardCharts analysis={analysis} />
     </div>
   );
 }

@@ -40,6 +40,7 @@
  * @property {{ frequency: Record<string, number>, unlicensed: number }} licenses
  * @property {{ oldest: NotableRepository | null, newest: NotableRepository | null, averageAgeDays: number }} age
  * @property {{ lastActivityAt: string | null, repository: NotableRepository | null }} activity
+ * @property {{ year: number, count: number }[]} timeline
  * @property {{ total: number, average: number, largest: NotableRepository | null, smallest: NotableRepository | null }} sizes
  */
 

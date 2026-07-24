@@ -44,6 +44,7 @@ describe('composeAnalysis', () => {
     expect(result.languages.top[0]).toEqual({ name: 'JavaScript', count: 2 });
     expect(result.sizes.largest.name).toBe('b');
     expect(result.sizes.smallest.name).toBe('a');
+    expect(result.timeline).toEqual([{ year: 2020, count: 3 }]);
   });
 
   it('returns a deeply frozen, immutable result', () => {

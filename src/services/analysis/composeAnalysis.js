@@ -5,6 +5,7 @@ import { calculateLicenses } from './licenses.js';
 import { calculateForks, calculateOpenIssues, calculateStars, calculateWatchers } from './engagement.js';
 import { calculateActivity, calculateRepositoryAge } from './age.js';
 import { calculateSizes } from './sizes.js';
+import { calculateTimeline } from './timeline.js';
 import { deepFreeze } from '../../utils/deepFreeze.js';
 
 /**
@@ -28,6 +29,7 @@ export function composeAnalysis(user, repositories, { now = new Date() } = {}) {
     licenses: calculateLicenses(repositories),
     age: calculateRepositoryAge(repositories, now),
     activity: calculateActivity(repositories),
+    timeline: calculateTimeline(repositories),
     sizes: calculateSizes(repositories),
   });
 }
