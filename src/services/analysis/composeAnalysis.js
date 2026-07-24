@@ -5,23 +5,7 @@ import { calculateLicenses } from './licenses.js';
 import { calculateForks, calculateOpenIssues, calculateStars, calculateWatchers } from './engagement.js';
 import { calculateActivity, calculateRepositoryAge } from './age.js';
 import { calculateSizes } from './sizes.js';
-
-/**
- * Recursively freeze a value the engine created. Every value passed here is
- * built from projections and primitives, never the caller's input objects, so
- * freezing has no side effects on the arguments.
- *
- * @template T
- * @param {T} value
- * @returns {T}
- */
-function deepFreeze(value) {
-  if (value && typeof value === 'object' && !Object.isFrozen(value)) {
-    Object.values(value).forEach(deepFreeze);
-    Object.freeze(value);
-  }
-  return value;
-}
+import { deepFreeze } from '../../utils/deepFreeze.js';
 
 /**
  * Compose the complete, immutable analysis of a user's public repositories.

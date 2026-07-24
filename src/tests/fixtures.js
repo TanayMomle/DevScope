@@ -59,3 +59,35 @@ export function makeUser(overrides = {}) {
     ...overrides,
   };
 }
+
+/**
+ * Build an AnalysisResult for scoring tests. The default is a strong portfolio
+ * that triggers no deductions; override the sections a test needs to change.
+ *
+ * @param {Partial<import('../types/analysis.js').AnalysisResult>} [overrides]
+ * @returns {import('../types/analysis.js').AnalysisResult}
+ */
+export function makeAnalysis(overrides = {}) {
+  return {
+    username: 'octocat',
+    counts: { total: 10, original: 10, forked: 0, archived: 0, visibility: { public: 10, private: 0 } },
+    stars: { total: 100, mostStarred: null },
+    forks: { total: 5, mostForked: null },
+    watchers: 100,
+    openIssues: 3,
+    languages: {
+      distribution: { JavaScript: 4, Python: 3, Go: 3 },
+      top: [
+        { name: 'JavaScript', count: 4 },
+        { name: 'Go', count: 3 },
+        { name: 'Python', count: 3 },
+      ],
+    },
+    topics: { frequency: { cli: 2, web: 3 }, top: [{ name: 'web', count: 3 }, { name: 'cli', count: 2 }] },
+    licenses: { frequency: { MIT: 8 }, unlicensed: 2 },
+    age: { oldest: null, newest: null, averageAgeDays: 500 },
+    activity: { lastActivityAt: '2025-12-01T00:00:00Z', repository: null },
+    sizes: { total: 1000, average: 100, largest: null, smallest: null },
+    ...overrides,
+  };
+}
