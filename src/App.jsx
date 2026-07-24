@@ -3,15 +3,15 @@ import { motion } from 'framer-motion';
 import { Telescope } from 'lucide-react';
 import ProfileSearch from './components/ProfileSearch.jsx';
 import ProfileCard from './components/ProfileCard.jsx';
-import RepositorySection from './components/RepositorySection.jsx';
+import Dashboard from './components/Dashboard.jsx';
 import ErrorState from './components/ErrorState.jsx';
 import LoadingState from './components/LoadingState.jsx';
-import { useGitHubProfile } from './hooks/useGitHubProfile.js';
+import { usePortfolioAnalysis } from './hooks/usePortfolioAnalysis.js';
 import { APP_NAME, APP_TAGLINE } from './config/app.js';
 
 export default function App() {
   const [username, setUsername] = useState('');
-  const { profile, repositories } = useGitHubProfile(username);
+  const { profile, repositories, dashboard } = usePortfolioAnalysis(username);
 
   return (
     <main className="min-h-dvh px-4 py-12 sm:py-16">
@@ -38,11 +38,10 @@ export default function App() {
             className="flex flex-col gap-8"
           >
             <ProfileCard user={profile.data} />
-            <RepositorySection
-              status={repositories.status}
-              error={repositories.error}
-              repositories={repositories.data ?? []}
-            />
+
+            {repositories.status === 'loading' && <LoadingState label="Analyzing repositories…" />}
+            {repositories.status === 'error' && <ErrorState error={repositories.error} />}
+            {repositories.status === 'success' && dashboard && <Dashboard model={dashboard} />}
           </motion.div>
         )}
       </div>

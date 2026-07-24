@@ -44,7 +44,7 @@ export function makeUser(overrides = {}) {
     login: 'octocat',
     id: 1,
     name: 'The Octocat',
-    avatarUrl: '',
+    avatarUrl: 'https://avatars.githubusercontent.com/u/1?v=4',
     htmlUrl: 'https://github.com/octocat',
     bio: null,
     company: null,
@@ -88,6 +88,26 @@ export function makeAnalysis(overrides = {}) {
     age: { oldest: null, newest: null, averageAgeDays: 500 },
     activity: { lastActivityAt: '2025-12-01T00:00:00Z', repository: null },
     sizes: { total: 1000, average: 100, largest: null, smallest: null },
+    ...overrides,
+  };
+}
+
+/**
+ * Build a PortfolioScore for dashboard tests. The default is a perfect score;
+ * override individual categories or the overall value as needed.
+ *
+ * @param {Partial<import('../types/scoring.js').PortfolioScore>} [overrides]
+ * @returns {import('../types/scoring.js').PortfolioScore}
+ */
+export function makeScore(overrides = {}) {
+  const category = (label) => ({ label, value: 20, max: 20, deductions: [] });
+  return {
+    overallScore: 100,
+    repositoryScore: category('Repository Portfolio'),
+    activityScore: category('Activity & Recency'),
+    languageScore: category('Language Diversity'),
+    qualityScore: category('Quality Signals'),
+    maintainabilityScore: category('Maintainability'),
     ...overrides,
   };
 }
