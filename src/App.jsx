@@ -1,37 +1,50 @@
 import { motion } from 'framer-motion';
-import { Telescope } from 'lucide-react';
+import { Loader2, Telescope } from 'lucide-react';
+import ProfileSearch from './components/ProfileSearch.jsx';
+import ProfileCard from './components/ProfileCard.jsx';
+import RepositoryList from './components/RepositoryList.jsx';
+import ErrorState from './components/ErrorState.jsx';
+import { useGitHubProfile } from './hooks/useGitHubProfile.js';
 import { APP_NAME, APP_TAGLINE } from './config/app.js';
-import { cn } from './utils/cn.js';
 
-/**
- * Application shell. Feature surfaces (profile search, dashboard, reports)
- * are introduced in later phases; for now this renders the product identity.
- */
 export default function App() {
-  return (
-    <main
-      className={cn(
-        'flex min-h-dvh flex-col items-center justify-center',
-        'gap-6 px-6 text-center',
-      )}
-    >
-      <motion.div
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: 'easeOut' }}
-        className="flex flex-col items-center gap-5"
-      >
-        <span className="flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-400 ring-1 ring-brand-500/30">
-          <Telescope className="h-8 w-8" aria-hidden="true" />
-        </span>
+  const { status, profile, repositories, error, analyze } = useGitHubProfile();
+  const isLoading = status === 'loading';
 
-        <div className="space-y-2">
-          <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            {APP_NAME}
-          </h1>
-          <p className="max-w-md text-balance text-slate-400">{APP_TAGLINE}</p>
-        </div>
-      </motion.div>
+  return (
+    <main className="min-h-dvh px-4 py-12 sm:py-16">
+      <div className="mx-auto flex w-full max-w-4xl flex-col gap-10">
+        <header className="flex flex-col items-center gap-3 text-center">
+          <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600/10 text-brand-400 ring-1 ring-brand-500/30">
+            <Telescope className="h-6 w-6" aria-hidden="true" />
+          </span>
+          <h1 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">{APP_NAME}</h1>
+          <p className="text-slate-400">{APP_TAGLINE}</p>
+        </header>
+
+        <ProfileSearch onSubmit={analyze} loading={isLoading} />
+
+        {isLoading && (
+          <div role="status" className="flex items-center justify-center gap-3 text-slate-300">
+            <Loader2 className="h-5 w-5 animate-spin text-brand-400" aria-hidden="true" />
+            <span>Analyzing profile…</span>
+          </div>
+        )}
+
+        {error && !isLoading && <ErrorState error={error} />}
+
+        {status === 'success' && profile && (
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
+            className="flex flex-col gap-8"
+          >
+            <ProfileCard user={profile} />
+            <RepositoryList repositories={repositories} />
+          </motion.div>
+        )}
+      </div>
     </main>
   );
 }
