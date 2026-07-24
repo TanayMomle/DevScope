@@ -7,6 +7,7 @@
  * @property {import('./analysis.js').AnalysisResult} analysis
  * @property {import('./scoring.js').PortfolioScore} score
  * @property {import('./scoring.js').Deduction[]} topDeductions
+ * @property {import('./recommendations.js').Recommendation[]} recommendations
  */
 
 export {};

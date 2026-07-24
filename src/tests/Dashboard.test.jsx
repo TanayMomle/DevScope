@@ -49,6 +49,18 @@ const model = {
   analysis: richAnalysis,
   score: scoreWithDeductions,
   topDeductions: scoreWithDeductions.maintainabilityScore.deductions,
+  recommendations: [
+    {
+      id: 'ARCHIVED_REPOSITORIES',
+      title: 'Reduce archived repositories',
+      description: 'A large share of your repositories are archived.',
+      priority: 'Low',
+      category: 'maintainability',
+      evidence: '3 of 10 repositories are archived.',
+      improvementEstimate: 10,
+      actionItems: ['Unarchive projects you still maintain.'],
+    },
+  ],
 };
 
 describe('Dashboard', () => {
@@ -96,6 +108,13 @@ describe('Dashboard', () => {
     }
   });
 
+  it('renders recommendation cards', () => {
+    render(<Dashboard model={model} />);
+    expect(screen.getByRole('heading', { name: 'Reduce archived repositories' })).toBeInTheDocument();
+    expect(screen.getByText('Low')).toBeInTheDocument();
+    expect(screen.getByText('Unarchive projects you still maintain.')).toBeInTheDocument();
+  });
+
   it('handles an empty analysis without crashing', () => {
     const emptyModel = {
       analysis: makeAnalysis({
@@ -113,10 +132,12 @@ describe('Dashboard', () => {
       }),
       score: makeScore({ overallScore: 40 }),
       topDeductions: [],
+      recommendations: [],
     };
     render(<Dashboard model={emptyModel} />);
 
     expect(screen.getByText('40')).toBeInTheDocument();
     expect(screen.getByText('No repositories to highlight.')).toBeInTheDocument();
+    expect(screen.getByText(/great shape/i)).toBeInTheDocument();
   });
 });

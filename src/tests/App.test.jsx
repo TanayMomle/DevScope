@@ -74,7 +74,12 @@ describe('App', () => {
       state({
         profile: { status: 'success', data: makeUser({ name: 'The Octocat' }), error: null },
         repositories: { status: 'success', data: [], error: null },
-        dashboard: { analysis: makeAnalysis(), score: makeScore({ overallScore: 91 }), topDeductions: [] },
+        dashboard: {
+          analysis: makeAnalysis(),
+          score: makeScore({ overallScore: 91 }),
+          topDeductions: [],
+          recommendations: [],
+        },
       }),
     );
     render(<App />);

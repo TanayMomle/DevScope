@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useGitHubProfile } from './useGitHubProfile.js';
 import { composeAnalysis } from '../services/analysis/composeAnalysis.js';
 import { composeScore } from '../services/scoring/composeScore.js';
+import { composeRecommendations } from '../services/recommendations/composeRecommendations.js';
 
 /**
  * Flatten every category's deductions into one list ordered by penalty (desc),
@@ -39,7 +40,12 @@ export function usePortfolioAnalysis(username) {
     }
     const analysis = composeAnalysis(profile.data, repositories.data);
     const score = composeScore(analysis);
-    return { analysis, score, topDeductions: collectTopDeductions(score) };
+    return {
+      analysis,
+      score,
+      topDeductions: collectTopDeductions(score),
+      recommendations: composeRecommendations(analysis, score),
+    };
   }, [profile.status, profile.data, repositories.status, repositories.data]);
 
   return { profile, repositories, dashboard };

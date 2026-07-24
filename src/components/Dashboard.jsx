@@ -4,6 +4,7 @@ import CategoryCard from './CategoryCard.jsx';
 import SummaryCard from './SummaryCard.jsx';
 import RepositoryHighlights from './RepositoryHighlights.jsx';
 import DashboardCharts from './charts/DashboardCharts.jsx';
+import RecommendationCard from './RecommendationCard.jsx';
 
 /**
  * The dashboard: a thin presentation of the analysis and score. It arranges
@@ -12,7 +13,7 @@ import DashboardCharts from './charts/DashboardCharts.jsx';
  * @param {{ model: import('../types/dashboard.js').DashboardModel }} props
  */
 export default function Dashboard({ model }) {
-  const { analysis, score, topDeductions } = model;
+  const { analysis, score, topDeductions, recommendations } = model;
 
   const categories = [
     score.repositoryScore,
@@ -85,6 +86,26 @@ export default function Dashboard({ model }) {
       <RepositoryHighlights analysis={analysis} />
 
       <DashboardCharts analysis={analysis} />
+
+      <section aria-labelledby="recommendations-heading" className="flex flex-col gap-4">
+        <h2
+          id="recommendations-heading"
+          className="text-sm font-medium uppercase tracking-wide text-slate-400"
+        >
+          Recommendations
+        </h2>
+        {recommendations.length === 0 ? (
+          <p className="text-sm text-slate-500">
+            No recommendations — your portfolio is in great shape.
+          </p>
+        ) : (
+          <div className="grid gap-4 md:grid-cols-2">
+            {recommendations.map((recommendation) => (
+              <RecommendationCard key={recommendation.id} recommendation={recommendation} />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
