@@ -33,9 +33,6 @@ footprint — no guesswork, no opaque scoring.
 | Styling       | Tailwind CSS                    |
 | Animation     | Framer Motion                   |
 | Icons         | Lucide React                    |
-| Routing       | React Router                    |
-| Data fetching | TanStack React Query            |
-| Charts        | Recharts                        |
 | Testing       | Vitest + Testing Library        |
 | Linting       | ESLint                          |
 
@@ -74,22 +71,13 @@ devscope/
 ├── docs/                # Project documentation
 ├── public/              # Static assets served as-is
 └── src/
-    ├── api/             # GitHub API client layer
-    ├── assets/          # Imported images and fonts
-    ├── components/      # UI components
-    │   ├── common/      # Shared, reusable UI
-    │   ├── dashboard/   # Analytics and report views
-    │   └── layout/      # Page structure and navigation
     ├── config/          # Application configuration and constants
-    ├── hooks/           # Reusable React hooks
-    ├── pages/           # Route-level pages
-    ├── services/        # Analysis, scoring, and recommendation logic
-    ├── state/           # Client-side state and query configuration
     ├── styles/          # Global styles and Tailwind entry
     ├── tests/           # Test setup and suites
     ├── theme/           # Design tokens
-    ├── types/           # Shared type definitions (JSDoc)
-    └── utils/           # Small, dependency-free helpers
+    ├── utils/           # Small, dependency-free helpers
+    ├── App.jsx          # Application shell
+    └── main.jsx         # Entry point
 ```
 
 ## Roadmap
@@ -100,6 +88,10 @@ devscope/
 - Profile health report and scoring
 - Deterministic, actionable recommendations
 - Shareable and exportable reports
+
+Additional libraries are introduced alongside the features that need them —
+React Router for routing, TanStack React Query for data fetching, and Recharts
+for charts.
 
 ## License
 

@@ -18,9 +18,5 @@ export const brand = {
   900: '#1e3a8a',
 };
 
-/** Neutral surfaces used for backgrounds and elevated panels. */
-export const surface = {
-  DEFAULT: '#0b1120',
-  muted: '#111827',
-  raised: '#1f2937',
-};
+/** Application background surface. */
+export const surface = '#0b1120';
