@@ -69,6 +69,7 @@ function normalizeRepository(raw) {
     size: raw.size,
     fork: raw.fork,
     archived: raw.archived,
+    visibility: raw.visibility,
     defaultBranch: raw.default_branch,
     createdAt: raw.created_at,
     updatedAt: raw.updated_at,

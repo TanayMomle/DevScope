@@ -50,6 +50,7 @@
  * @property {number} size
  * @property {boolean} fork
  * @property {boolean} archived
+ * @property {string} visibility
  * @property {string} defaultBranch
  * @property {string} createdAt
  * @property {string} updatedAt
