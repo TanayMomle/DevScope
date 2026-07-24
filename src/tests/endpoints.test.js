@@ -6,8 +6,13 @@ describe('endpoints', () => {
     expect(getUser('octocat')).toBe('https://api.github.com/users/octocat');
   });
 
-  it('builds the repositories URL', () => {
-    expect(getRepositories('octocat')).toBe('https://api.github.com/users/octocat/repos');
+  it('builds a paginated repositories URL', () => {
+    expect(getRepositories('octocat')).toBe(
+      'https://api.github.com/users/octocat/repos?per_page=100&page=1',
+    );
+    expect(getRepositories('octocat', { page: 3, perPage: 50 })).toBe(
+      'https://api.github.com/users/octocat/repos?per_page=50&page=3',
+    );
   });
 
   it('builds the single repository URL', () => {

@@ -7,6 +7,8 @@ import { requestJson } from '../api/githubClient.js';
  * @typedef {import('../types/github.js').RepositoryOwner} RepositoryOwner
  */
 
+const REPOSITORIES_PER_PAGE = 100;
+
 /**
  * @param {Record<string, any>} raw
  * @returns {RepositoryOwner}
@@ -78,28 +80,44 @@ function normalizeRepository(raw) {
 /**
  * Fetch and normalize a user's public profile.
  * @param {string} username
+ * @param {{ signal?: AbortSignal }} [options]
  * @returns {Promise<GitHubUser>}
  */
-export async function fetchUser(username) {
-  return normalizeUser(await requestJson(getUser(username)));
+export async function fetchUser(username, { signal } = {}) {
+  return normalizeUser(await requestJson(getUser(username), { signal }));
 }
 
 /**
- * Fetch and normalize a user's public repositories.
+ * Fetch every page of a user's public repositories, preserving GitHub's order,
+ * and normalize the merged result exactly once.
  * @param {string} username
+ * @param {{ signal?: AbortSignal }} [options]
  * @returns {Promise<Repository[]>}
  */
-export async function fetchRepositories(username) {
-  const repositories = await requestJson(getRepositories(username));
-  return repositories.map(normalizeRepository);
+export async function fetchRepositories(username, { signal } = {}) {
+  const raw = [];
+  let page = 1;
+  let pageItems;
+
+  do {
+    pageItems = await requestJson(
+      getRepositories(username, { page, perPage: REPOSITORIES_PER_PAGE }),
+      { signal },
+    );
+    raw.push(...pageItems);
+    page += 1;
+  } while (pageItems.length === REPOSITORIES_PER_PAGE);
+
+  return raw.map(normalizeRepository);
 }
 
 /**
  * Fetch and normalize a single repository.
  * @param {string} owner
  * @param {string} repo
+ * @param {{ signal?: AbortSignal }} [options]
  * @returns {Promise<Repository>}
  */
-export async function fetchRepository(owner, repo) {
-  return normalizeRepository(await requestJson(getRepository(owner, repo)));
+export async function fetchRepository(owner, repo, { signal } = {}) {
+  return normalizeRepository(await requestJson(getRepository(owner, repo), { signal }));
 }

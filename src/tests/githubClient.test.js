@@ -77,4 +77,26 @@ describe('requestJson', () => {
     await vi.advanceTimersByTimeAsync(1000);
     await assertion;
   });
+
+  it('propagates a caller-initiated cancellation without wrapping it', async () => {
+    const controller = new AbortController();
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(
+        (url, { signal }) =>
+          new Promise((_resolve, reject) => {
+            signal.addEventListener('abort', () =>
+              reject(new DOMException('Aborted', 'AbortError')),
+            );
+          }),
+      ),
+    );
+
+    const pending = requestJson('https://api.github.com/users/octocat', {
+      signal: controller.signal,
+    });
+    controller.abort();
+
+    await expect(pending).rejects.toMatchObject({ name: 'AbortError' });
+  });
 });

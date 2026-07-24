@@ -10,12 +10,14 @@ export function getUser(username) {
 }
 
 /**
- * Build the URL for a user's public repositories.
+ * Build the URL for a single page of a user's public repositories.
  * @param {string} username
+ * @param {{ page?: number, perPage?: number }} [options]
  * @returns {string}
  */
-export function getRepositories(username) {
-  return `${API_BASE_URL}/users/${encodeURIComponent(username)}/repos`;
+export function getRepositories(username, { page = 1, perPage = 100 } = {}) {
+  const query = new URLSearchParams({ per_page: String(perPage), page: String(page) });
+  return `${API_BASE_URL}/users/${encodeURIComponent(username)}/repos?${query}`;
 }
 
 /**

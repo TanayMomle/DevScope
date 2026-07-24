@@ -39,23 +39,17 @@ function RepositoryCard({ repository }) {
 }
 
 export default function RepositoryList({ repositories }) {
-  return (
-    <section aria-labelledby="repositories-heading" className="flex flex-col gap-4">
-      <h2 id="repositories-heading" className="text-lg font-semibold text-white">
-        Repositories
-      </h2>
+  if (repositories.length === 0) {
+    return <p className="text-slate-400">This user has no public repositories.</p>;
+  }
 
-      {repositories.length === 0 ? (
-        <p className="text-slate-400">This user has no public repositories.</p>
-      ) : (
-        <ul className="grid gap-4 sm:grid-cols-2">
-          {repositories.map((repository) => (
-            <li key={repository.id}>
-              <RepositoryCard repository={repository} />
-            </li>
-          ))}
-        </ul>
-      )}
-    </section>
+  return (
+    <ul className="grid gap-4 sm:grid-cols-2">
+      {repositories.map((repository) => (
+        <li key={repository.id}>
+          <RepositoryCard repository={repository} />
+        </li>
+      ))}
+    </ul>
   );
 }

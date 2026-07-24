@@ -1,15 +1,17 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Loader2, Telescope } from 'lucide-react';
+import { Telescope } from 'lucide-react';
 import ProfileSearch from './components/ProfileSearch.jsx';
 import ProfileCard from './components/ProfileCard.jsx';
-import RepositoryList from './components/RepositoryList.jsx';
+import RepositorySection from './components/RepositorySection.jsx';
 import ErrorState from './components/ErrorState.jsx';
+import LoadingState from './components/LoadingState.jsx';
 import { useGitHubProfile } from './hooks/useGitHubProfile.js';
 import { APP_NAME, APP_TAGLINE } from './config/app.js';
 
 export default function App() {
-  const { status, profile, repositories, error, analyze } = useGitHubProfile();
-  const isLoading = status === 'loading';
+  const [username, setUsername] = useState('');
+  const { profile, repositories } = useGitHubProfile(username);
 
   return (
     <main className="min-h-dvh px-4 py-12 sm:py-16">
@@ -22,26 +24,25 @@ export default function App() {
           <p className="text-slate-400">{APP_TAGLINE}</p>
         </header>
 
-        <ProfileSearch onSubmit={analyze} loading={isLoading} />
+        <ProfileSearch onSubmit={setUsername} loading={profile.status === 'loading'} />
 
-        {isLoading && (
-          <div role="status" className="flex items-center justify-center gap-3 text-slate-300">
-            <Loader2 className="h-5 w-5 animate-spin text-brand-400" aria-hidden="true" />
-            <span>Analyzing profile…</span>
-          </div>
-        )}
+        {profile.status === 'loading' && <LoadingState label="Analyzing profile…" />}
 
-        {error && !isLoading && <ErrorState error={error} />}
+        {profile.status === 'error' && <ErrorState error={profile.error} />}
 
-        {status === 'success' && profile && (
+        {profile.status === 'success' && (
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: 'easeOut' }}
             className="flex flex-col gap-8"
           >
-            <ProfileCard user={profile} />
-            <RepositoryList repositories={repositories} />
+            <ProfileCard user={profile.data} />
+            <RepositorySection
+              status={repositories.status}
+              error={repositories.error}
+              repositories={repositories.data ?? []}
+            />
           </motion.div>
         )}
       </div>
