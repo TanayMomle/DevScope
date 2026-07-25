@@ -3,12 +3,15 @@
 // SVG sizing (ResizeObserver) or axis labels that collide with card text.
 
 const Passthrough = ({ children }) => <div>{children}</div>;
+// Chart roots render an <svg> so SVG children (defs, linearGradient, stop) are
+// valid elements rather than unknown tags in a div context.
+const SvgChart = ({ children }) => <svg>{children}</svg>;
 const Empty = () => null;
 
 export const ResponsiveContainer = Passthrough;
-export const PieChart = Passthrough;
-export const BarChart = Passthrough;
-export const AreaChart = Passthrough;
+export const PieChart = SvgChart;
+export const BarChart = SvgChart;
+export const AreaChart = SvgChart;
 export const Pie = Empty;
 export const Bar = Empty;
 export const Area = Empty;

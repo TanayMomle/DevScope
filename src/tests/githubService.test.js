@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { fetchRepositories, fetchRepository, fetchUser } from '../services/githubService.js';
+import { fetchRepositories, fetchUser } from '../services/githubService.js';
 
 const jsonResponse = (body) =>
   new Response(JSON.stringify(body), {
@@ -165,17 +165,5 @@ describe('fetchRepositories', () => {
 
     expect(repository.topics).toEqual([]);
     expect(repository.license).toBeNull();
-  });
-});
-
-describe('fetchRepository', () => {
-  it('maps a single raw repository', async () => {
-    vi.stubGlobal('fetch', vi.fn(async () => jsonResponse(rawRepo)));
-
-    const repository = await fetchRepository('octocat', 'Hello-World');
-
-    expect(repository.fullName).toBe('octocat/Hello-World');
-    expect(repository.license).toBe('MIT');
-    expect(repository.owner.login).toBe('octocat');
   });
 });

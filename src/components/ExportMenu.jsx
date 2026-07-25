@@ -30,7 +30,7 @@ function printReport(content) {
 export default function ExportMenu({ model }) {
   return (
     <div role="group" aria-label="Export" className="flex flex-wrap items-center gap-2">
-      <span className="text-xs uppercase tracking-wide text-slate-500">Export</span>
+      <span className="text-xs uppercase tracking-wide text-slate-400">Export</span>
       <button type="button" className={buttonClass} onClick={() => downloadFile(composeExport(model, 'json'))}>
         <Download className="h-4 w-4" aria-hidden="true" />
         JSON

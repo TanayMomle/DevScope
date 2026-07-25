@@ -19,7 +19,7 @@ export default function RecommendationCard({ recommendation }) {
         </span>
       </div>
 
-      <p className="text-xs uppercase tracking-wide text-slate-500">
+      <p className="text-xs uppercase tracking-wide text-slate-400">
         {recommendation.category} · +{recommendation.improvementEstimate} pts
       </p>
 

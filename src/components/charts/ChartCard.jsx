@@ -22,7 +22,7 @@ export default function ChartCard({ title, description, isEmpty, children }) {
       </p>
 
       {isEmpty ? (
-        <p className="mt-8 text-sm text-slate-500">No data to display.</p>
+        <p className="mt-8 text-sm text-slate-400">No data to display.</p>
       ) : (
         <div role="img" aria-label={`${title}. ${description}`} className="mt-4 h-56 w-full">
           {children}

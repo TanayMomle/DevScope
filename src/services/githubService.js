@@ -1,4 +1,4 @@
-import { getRepositories, getRepository, getUser } from '../api/endpoints.js';
+import { getRepositories, getUser } from '../api/endpoints.js';
 import { requestJson } from '../api/githubClient.js';
 
 /**
@@ -110,15 +110,4 @@ export async function fetchRepositories(username, { signal } = {}) {
   } while (pageItems.length === REPOSITORIES_PER_PAGE);
 
   return raw.map(normalizeRepository);
-}
-
-/**
- * Fetch and normalize a single repository.
- * @param {string} owner
- * @param {string} repo
- * @param {{ signal?: AbortSignal }} [options]
- * @returns {Promise<Repository>}
- */
-export async function fetchRepository(owner, repo, { signal } = {}) {
-  return normalizeRepository(await requestJson(getRepository(owner, repo), { signal }));
 }

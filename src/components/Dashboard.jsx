@@ -1,11 +1,15 @@
+import { Suspense, lazy } from 'react';
 import { formatNumber } from '../utils/format.js';
 import ScoreCard from './ScoreCard.jsx';
 import CategoryCard from './CategoryCard.jsx';
 import SummaryCard from './SummaryCard.jsx';
 import RepositoryHighlights from './RepositoryHighlights.jsx';
-import DashboardCharts from './charts/DashboardCharts.jsx';
 import RecommendationCard from './RecommendationCard.jsx';
 import ExportMenu from './ExportMenu.jsx';
+import LoadingState from './LoadingState.jsx';
+
+// Recharts is heavy; load the chart section only when a dashboard is shown.
+const DashboardCharts = lazy(() => import('./charts/DashboardCharts.jsx'));
 
 /**
  * The dashboard: a thin presentation of the analysis and score. It arranges
@@ -90,7 +94,9 @@ export default function Dashboard({ model }) {
 
       <RepositoryHighlights analysis={analysis} />
 
-      <DashboardCharts analysis={analysis} />
+      <Suspense fallback={<LoadingState label="Loading charts…" />}>
+        <DashboardCharts analysis={analysis} />
+      </Suspense>
 
       <section aria-labelledby="recommendations-heading" className="flex flex-col gap-4">
         <h2
@@ -100,7 +106,7 @@ export default function Dashboard({ model }) {
           Recommendations
         </h2>
         {recommendations.length === 0 ? (
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-slate-400">
             No recommendations — your portfolio is in great shape.
           </p>
         ) : (

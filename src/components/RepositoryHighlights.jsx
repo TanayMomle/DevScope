@@ -52,12 +52,12 @@ export default function RepositoryHighlights({ analysis }) {
         Notable Repositories
       </h2>
       {highlights.length === 0 ? (
-        <p className="mt-3 text-sm text-slate-500">No repositories to highlight.</p>
+        <p className="mt-3 text-sm text-slate-400">No repositories to highlight.</p>
       ) : (
         <ul className="mt-3 grid gap-3 sm:grid-cols-2">
           {highlights.map((highlight) => (
             <li key={highlight.key} className="flex flex-col rounded-lg bg-white/5 p-3">
-              <span className="text-xs uppercase tracking-wide text-slate-500">
+              <span className="text-xs uppercase tracking-wide text-slate-400">
                 {highlight.label}
               </span>
               <a

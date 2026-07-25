@@ -19,13 +19,3 @@ export function getRepositories(username, { page = 1, perPage = 100 } = {}) {
   const query = new URLSearchParams({ per_page: String(perPage), page: String(page) });
   return `${API_BASE_URL}/users/${encodeURIComponent(username)}/repos?${query}`;
 }
-
-/**
- * Build the URL for a single repository.
- * @param {string} owner
- * @param {string} repo
- * @returns {string}
- */
-export function getRepository(owner, repo) {
-  return `${API_BASE_URL}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`;
-}

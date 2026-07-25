@@ -11,7 +11,7 @@ export default function ScoreCard({ score, max }) {
       </h2>
       <p className="mt-2 flex items-baseline gap-2">
         <span className="text-5xl font-semibold text-white">{score}</span>
-        <span className="text-lg text-slate-500">/ {max}</span>
+        <span className="text-lg text-slate-400">/ {max}</span>
       </p>
       <div
         role="progressbar"

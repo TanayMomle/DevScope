@@ -2,26 +2,40 @@
 
 **Deep GitHub Intelligence for Developers**
 
-DevScope analyzes any public GitHub profile and turns it into professional
-portfolio insights — repository analytics, technology breakdowns, health
-reports, and actionable recommendations. Every insight is produced by
-transparent, deterministic rules, so results stay consistent and explainable.
+DevScope analyzes any public GitHub profile and turns it into a portfolio
+report: a headline score, category breakdown, repository analytics, charts,
+and actionable recommendations. Every insight is produced by transparent,
+deterministic rules — no AI, no opaque scoring — so results stay consistent
+and explainable.
 
 ## Overview
 
-Point DevScope at a GitHub username and it builds a structured picture of that
-developer's public work: how active they are, what they build, which languages
-and technologies show up across their repositories, and where their portfolio
-could be stronger. The goal is a clear, shareable read on a developer's public
-footprint — no guesswork, no opaque scoring.
+Enter a GitHub username and DevScope fetches the profile and every public
+repository, then runs a deterministic pipeline entirely in the browser:
+
+```text
+GitHub API → analysis → scoring → recommendations → dashboard
+```
+
+The dashboard shows an overall portfolio score (0–100) and five category
+scores, repository and engagement summaries, language/topic/license
+breakdowns, notable repositories, visualizations, and prioritized
+recommendations. The whole report can be exported.
 
 ## Features
 
-- **Profile analytics** — activity, contribution patterns, and portfolio summary.
-- **Repository insights** — per-repository metrics such as stars, forks, and recency.
-- **Technology breakdown** — languages and tooling aggregated across repositories.
-- **Health reports** — a rules-based read on the overall strength of a profile.
-- **Actionable recommendations** — concrete, deterministic suggestions for improvement.
+- **Portfolio score** — an overall 0–100 score with a per-category breakdown
+  (repository, activity, language, quality, maintainability) and the exact
+  deductions behind it.
+- **Repository analytics** — totals, engagement (stars/forks/watchers/issues),
+  size and age statistics, and notable repositories.
+- **Breakdowns** — language distribution, topic frequency, and license usage.
+- **Visualizations** — language and license pies, a creation-timeline area
+  chart, and stars-vs-forks / topic bar charts.
+- **Recommendations** — prioritized, evidence-backed suggestions, each with an
+  estimated score gain and concrete action items.
+- **Export & share** — download the report as JSON or CSV, or print it via the
+  browser's print dialog.
 
 ## Technology stack
 
@@ -31,6 +45,8 @@ footprint — no guesswork, no opaque scoring.
 | Build tool    | Vite                            |
 | Language      | JavaScript                      |
 | Styling       | Tailwind CSS                    |
+| Data fetching | TanStack React Query            |
+| Charts        | Recharts                        |
 | Animation     | Framer Motion                   |
 | Icons         | Lucide React                    |
 | Testing       | Vitest + Testing Library        |
@@ -49,7 +65,12 @@ footprint — no guesswork, no opaque scoring.
 git clone <repository-url>
 cd devscope
 npm install
+npm run dev
 ```
+
+DevScope talks directly to GitHub's public REST API from the browser; no API
+key or backend is required. Unauthenticated requests are subject to GitHub's
+rate limit (60 requests/hour per IP).
 
 ## Development
 
@@ -71,27 +92,26 @@ devscope/
 ├── docs/                # Project documentation
 ├── public/              # Static assets served as-is
 └── src/
-    ├── config/          # Application configuration and constants
+    ├── api/             # GitHub REST client, endpoints, typed errors
+    ├── components/      # Presentational UI, including charts/
+    ├── config/          # Application constants
+    ├── hooks/           # React Query data + analysis wiring
+    ├── services/        # Pure engines: analysis, scoring, recommendations, export
+    ├── state/           # React Query client configuration
     ├── styles/          # Global styles and Tailwind entry
     ├── tests/           # Test setup and suites
     ├── theme/           # Design tokens
+    ├── types/           # Shared JSDoc type definitions
     ├── utils/           # Small, dependency-free helpers
     ├── App.jsx          # Application shell
     └── main.jsx         # Entry point
 ```
 
-## Roadmap
+## Architecture
 
-- Profile search and retrieval
-- Repository analytics dashboard
-- Language and technology breakdown
-- Profile health report and scoring
-- Deterministic, actionable recommendations
-- Shareable and exportable reports
-
-Additional libraries are introduced alongside the features that need them —
-React Router for routing, TanStack React Query for data fetching, and Recharts
-for charts.
+The data and analysis engines are pure and framework-agnostic; the UI is a thin
+presentation layer that never computes metrics itself. See
+[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for details.
 
 ## License
 

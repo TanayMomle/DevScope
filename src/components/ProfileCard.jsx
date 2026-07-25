@@ -39,15 +39,15 @@ export default function ProfileCard({ user }) {
 
       <dl className="mt-6 grid grid-cols-3 gap-4 border-y border-white/10 py-4 text-center">
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">Followers</dt>
+          <dt className="text-xs uppercase tracking-wide text-slate-400">Followers</dt>
           <dd className="text-lg font-semibold text-white">{user.followers}</dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">Following</dt>
+          <dt className="text-xs uppercase tracking-wide text-slate-400">Following</dt>
           <dd className="text-lg font-semibold text-white">{user.following}</dd>
         </div>
         <div>
-          <dt className="text-xs uppercase tracking-wide text-slate-500">Repositories</dt>
+          <dt className="text-xs uppercase tracking-wide text-slate-400">Repositories</dt>
           <dd className="text-lg font-semibold text-white">{user.publicRepos}</dd>
         </div>
       </dl>
@@ -55,19 +55,19 @@ export default function ProfileCard({ user }) {
       <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-300">
         {user.company && (
           <li className="flex items-center gap-1.5">
-            <Building2 className="h-4 w-4 text-slate-500" aria-hidden="true" />
+            <Building2 className="h-4 w-4 text-slate-400" aria-hidden="true" />
             {user.company}
           </li>
         )}
         {user.location && (
           <li className="flex items-center gap-1.5">
-            <MapPin className="h-4 w-4 text-slate-500" aria-hidden="true" />
+            <MapPin className="h-4 w-4 text-slate-400" aria-hidden="true" />
             {user.location}
           </li>
         )}
         {user.blog && (
           <li className="flex items-center gap-1.5">
-            <LinkIcon className="h-4 w-4 text-slate-500" aria-hidden="true" />
+            <LinkIcon className="h-4 w-4 text-slate-400" aria-hidden="true" />
             <a
               href={ensureProtocol(user.blog)}
               target="_blank"
@@ -79,7 +79,7 @@ export default function ProfileCard({ user }) {
           </li>
         )}
         <li className="flex items-center gap-1.5">
-          <Calendar className="h-4 w-4 text-slate-500" aria-hidden="true" />
+          <Calendar className="h-4 w-4 text-slate-400" aria-hidden="true" />
           Joined {joined}
         </li>
       </ul>
