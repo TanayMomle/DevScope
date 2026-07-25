@@ -98,6 +98,22 @@ export function makeAnalysis(overrides = {}) {
 }
 
 /**
+ * Build a DashboardModel for export and dashboard tests.
+ *
+ * @param {Partial<import('../types/dashboard.js').DashboardModel>} [overrides]
+ * @returns {import('../types/dashboard.js').DashboardModel}
+ */
+export function makeDashboardModel(overrides = {}) {
+  return {
+    analysis: makeAnalysis(),
+    score: makeScore(),
+    topDeductions: [],
+    recommendations: [],
+    ...overrides,
+  };
+}
+
+/**
  * Build a PortfolioScore for dashboard tests. The default is a perfect score;
  * override individual categories or the overall value as needed.
  *

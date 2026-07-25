@@ -5,6 +5,7 @@ import SummaryCard from './SummaryCard.jsx';
 import RepositoryHighlights from './RepositoryHighlights.jsx';
 import DashboardCharts from './charts/DashboardCharts.jsx';
 import RecommendationCard from './RecommendationCard.jsx';
+import ExportMenu from './ExportMenu.jsx';
 
 /**
  * The dashboard: a thin presentation of the analysis and score. It arranges
@@ -58,6 +59,10 @@ export default function Dashboard({ model }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <div className="flex justify-end">
+        <ExportMenu model={model} />
+      </div>
+
       <ScoreCard score={score.overallScore} max={overallMax} />
 
       <section aria-labelledby="breakdown-heading" className="flex flex-col gap-4">
