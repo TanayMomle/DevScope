@@ -9,7 +9,7 @@ and actionable recommendations. Every insight is produced by transparent,
 deterministic rules — no AI, no opaque scoring — so results stay consistent
 and explainable.
 
-## Overview
+## 
 
 Enter a GitHub username and DevScope fetches the profile and every public
 repository, then runs a deterministic pipeline entirely in the browser:
