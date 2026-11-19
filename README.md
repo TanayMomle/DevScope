@@ -1,6 +1,7 @@
 # DevScope
 
 **Deep GitHub Intelligence for Developers**
+plaese change the variable value there is some issue with it causes a bug that restarts the function
 
 DevScope analyzes any public GitHub profile and turns it into a portfolio
 report: a headline score, category breakdown, repository analytics, charts,
